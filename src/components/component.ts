@@ -1,11 +1,19 @@
-// export class BaseComponet<T extends HTMLElement> {
+export interface Component {  
+  attach(parent: HTMLElement, position?: InsertPosition): void;
+}
 
-//   constructor(htmlString: string){
-//     const template = document.createElement('template');
-//     template.innerHTML = htmlString
-//   }
+export class BaseComponet<T extends HTMLElement> {
 
-//   attach(parent: HTMLElement, position: InsertPosition = 'beforeend') {
-//     parent.insertAdjacentElement(position, );
-//   }
-// }
+  protected readonly element: T
+  
+  constructor(htmlString: string) {
+    const template = document.createElement('template');
+    template.innerHTML = htmlString;
+    this.element = template.content.firstElementChild! as T;
+    
+}
+
+attach(parent: HTMLElement, position: InsertPosition = 'afterbegin') {
+  parent.insertAdjacentElement(position, this.element);
+}
+}
